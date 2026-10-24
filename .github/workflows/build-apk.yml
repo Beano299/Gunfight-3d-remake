@@ -1,0 +1,50 @@
+yaml
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js Environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Setup Java Development Kit (JDK)
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Android SDK Tools
+      uses: android-actions/setup-android@v3
+
+    - name: Install Cordova Compiler Platform
+      run: npm install -g cordova
+
+    - name: Initialize App Structure
+      run: |
+        mkdir temp_project
+        cd temp_project
+        cordova create app com.yourname.gunfright3d Gunfright3D
+        cd app
+        cordova platform add android
+        rm -rf www/*
+        cp ../../index.html www/
+        if [ -f ../../config.xml ]; then cp ../../config.xml .; fi
+        cordova build android --device --no-telemetry
+
+    - name: Upload Finished APK File
+      uses: actions/upload-artifact@v4
+      with:
+        name: gunfright-3d-apk
+        path: temp_project/app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
