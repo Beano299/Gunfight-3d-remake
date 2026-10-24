@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Three.js r128 (global THREE build) from a public CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Gunfright 3D</title>
+
+<!--
+  ============================  CORDOVA BUILD CONTRACT  ============================
+  The GitHub Actions workflow (.github/workflows/build-apk.yml) reads the meta tags
+  below with sed, then writes config.xml on the build server. Edit values here only.
+  Keep each tag on ONE line in exactly this form:  <meta name="cordova:KEY" content="VALUE">
+  Avoid the characters  & < >  inside values.
+  ==================================================================================
+-->
+<meta name="cordova:id" content="com.yourname.gunfright3d">
+<meta name="cordova:name" content="Gunfright 3D">
+<meta name="cordova:version" content="1.0.0">
+<meta name="cordova:description" content="Isometric western shootout built with Three.js">
+<meta name="cordova:author" content="Your Name">
+<meta name="cordova:author-email" content="you@example.com">
+<meta name="cordova:author-href" content="https://github.com/yourname">
+<meta name="cordova:orientation" content="landscape">
+<meta name="cordova:fullscreen" content="true">
+<meta name="cordova:hardware-acceleration" content="true">
+<meta name="cordova:min-sdk" content="24">
+<meta name="cordova:target-sdk" content="34">
+<meta name="cordova:background-color" content="0xff1a110c">
+<!-- App launcher icon: 512x512 PNG, base64 encoded. The workflow decodes it to res/icon.png. -->
+<meta name="cordova:icon-png-base64" content="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">
+<style>
+  html, body { margin:0; height:100%; overflow:hidden; background:#1a110c; touch-action:none;
+    -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+    -webkit-tap-highlight-color:transparent; font-family:Georgia,'Times New Roman',serif; }
+  #gl { display:block; width:100%; height:100%; }
+  #hud { position:fixed; inset:0; pointer-events:none; color:#fff3d6; text-shadow:0 2px 0 rgba(60,30,10,.85); }
+  #title { position:absolute; left:calc(14px + env(safe-area-inset-left)); top:calc(10px + env(safe-area-inset-top));
+    font-size:18px; letter-spacing:3px; font-weight:bold; }
+  #left { display:block; font-size:13px; letter-spacing:1px; opacity:.9; margin-top:2px; }
+  #gridBtn { pointer-events:auto; position:absolute; right:calc(14px + env(safe-area-inset-right));
+    top:calc(10px + env(safe-area-inset-top)); width:44px; height:44px; border-radius:50%;
+    border:2px solid rgba(255,243,214,.6); background:rgba(40,20,8,.35); color:#fff3d6; font-size:20px; }
+  #pad { pointer-events:auto; position:absolute; left:calc(22px + env(safe-area-inset-left));
+    bottom:calc(22px + env(safe-area-inset-bottom)); width:144px; height:144px; border-radius:50%;
+    background:radial-gradient(circle at 50% 38%, rgba(255,243,214,.24), rgba(60,30,10,.38));
+    border:2px solid rgba(255,243,214,.5); touch-action:none; }
+  #pad .a { position:absolute; font-size:15px; opacity:.55; }
+  #pad .u { left:50%; top:6px; transform:translateX(-50%); }
+  #pad .d { left:50%; bottom:6px; transform:translateX(-50%); }
+  #pad .l { left:9px; top:50%; transform:translateY(-50%); }
+  #pad .r { right:9px; top:50%; transform:translateY(-50%); }
+  #knob { position:absolute; left:50%; top:50%; width:58px; height:58px; margin:-29px 0 0 -29px; border-radius:50%;
+    background:rgba(255,243,214,.88); box-shadow:0 4px 0 rgba(60,30,10,.6); will-change:transform; }
+  #fire { pointer-events:auto; display:none; position:absolute; right:calc(26px + env(safe-area-inset-right));
+    bottom:calc(26px + env(safe-area-inset-bottom)); width:116px; height:116px; border-radius:50%;
+    align-items:center; justify-content:center; font-size:22px; font-weight:bold; letter-spacing:2px;
+    color:#fff3d6; background:radial-gradient(circle at 50% 35%, #e0573a, #8a2514);
+    border:3px solid rgba(255,243,214,.7); box-shadow:0 6px 0 rgba(60,20,8,.7); touch-action:none; }
+  #msg { position:absolute; left:0; right:0; top:24%; text-align:center; font-size:clamp(34px, 9vw, 84px);
+    font-weight:bold; letter-spacing:4px; opacity:0; transform:scale(.92); transition:opacity .15s, transform .15s; }
+  #msg.show { opacity:1; transform:scale(1); }
+  #msg.red { color:#ff6a4d; }
+  #sub { display:block; font-size:clamp(15px, 3.6vw, 26px); letter-spacing:2px; margin-top:6px; opacity:.9; }
+  .bar { position:absolute; left:0; right:0; height:0; background:#000; transition:height .5s ease; }
+  #barT { top:0; } #barB { bottom:0; }
+  body.duel .bar { height:11%; }
+  body.duel #pad { display:none; }
+  body.duel #fire { display:flex; }
+  body.duel #gridBtn { display:none; }
+</style>
+</head>
+<body>
+<div id="hud">
+  <div id="title">GUNFRIGHT<span id="left"></span></div>
+  <button id="gridBtn" title="Toggle grid">&#9638;</button>
+  <div id="msg"></div>
+  <div class="bar" id="barT"></div><div class="bar" id="barB"></div>
+  <div id="pad"><span class="a u">&#9650;</span><span class="a d">&#9660;</span><span class="a l">&#9664;</span><span class="a r">&#9654;</span><div id="knob"></div></div>
+  <div id="fire">FIRE</div>
+</div>
+
+<!-- Embedded asset pack: base64 WAV sound effects, decoded at runtime by the Assets loader below. -->
+<script type="application/json" id="asset-pack">{"sounds":{"shot":"UklGRoEQAABXQVZFZm10IBAAAAABAAEAESsAABErAAABAAgAZGF0YV0QAABfPJI5hHM+iECASkiE3Hd/x//pyf+a/7+Zh5/8odzvx+CMeIXVuqXPvaDt6p3Fvfbomv52jsFfhDSLpo29ZZOEfGKas2t8EmNgm4wzLlMBHAEBATMBAQFSAREmZGt8JSweb44bDAsHL0oiAS4wVqGQfIybQLS30tKZkV6lWU9fWndTR1tYglrYzZCWoqeE7P/b15eJopjqmHf0zJK+da73+OaioHnEq8yPcrrd1M7OwG+DZSsXLilklVuYqqxaMyIRCT1tc0hYbQ5KcmxrRxVbJ2CDQTh9biYRCmx1KHicgFhrNRuTgXmyf7W7cmpqYo9vgmLDkZ2w4bHuxcXEgqqNcM6RsdbMsMPK6ZvFoZ3XwMbf98POvrnLr7Gn3Mfa5ZOkzshxWnFCSTBvh51Lfns8hZlHjlVVjIM1Q0gyGyFPBjgwARo9OglqZ4QqLAxZLRo2c3tEMIFrfD0vb186lYegWaRaqIl9k8KHcZZ9bG5hcH+EuZWqjJl3iXG6tpSt4pfXt7vetrvM7rPc08qvoHl0ZqV9bl6ltah/cGx3V2xanKmFYJ1iXDFJUlY4Tx8tGjMTCiEdQEJcWmN2Sz54Ml5dJWZ2ZXB7PlhYeX+HdZKFh1xBQlVBhHqGjJWJW5yklJilc6iFcX2phLLSsqarvsvCxZOOkr2fs4V/jbG8wKGuqqiIxJDM0oacusykjH21fpRthapsm4WhlmyZe04+XVxQPklGcTNndT93bn9QTUp5YUxMPSYkXDxuQT1ON0J0enxxiJB1f0t3Z399Y0yMWW9pZomleJJ7jYRybnCnlYK0xqWKh3yLe4SHoL+/qaatop2GkMSQpbDEmpaPl5q/wMWIeqK1nKBzhKmprbeFb2d7h5ySjJF7e1R9W4V4XktMZGxFOlRbUENZNEBLcGR2XkpFcmpROVJiVkpke1RBUFdsUnd8cV2Na4ppZYZvmYVxb3qNpnuFeqp/dHCEqbOwxMajk724jaydm5eMfouQuI68lZi0uaSImZOzjZCvf42kpntxa5t7lKCCeJyMdYpza1Z7in6PXF1mgohqXGBie1Vycnh3bVtVVGtHR2RNQDpVTXR4g19OSV1sY1hgbXV9h4Fkhm56coZtbWxnj4h9gKGQgZ2br4WTpqy0iY+DhK2itp20opatupKlp5OWiYmJm6GMfombhoiBnZZ8eIOLkXd0jIF5d5V6g3h3jJZ6a4BnWH5sfmyAblxPZGp6VmleYlFUXnNSX297WlF0fGlTdmN6cXted2Blen9lYmlvbGBke4loe4dri3GEhYt/g4uHkoyMeZGPhZyil4qThIKOgo+Vg5qFn6WdiJeTq42nsamska2brK2NoKeEiJd/mYKVe4SVend+dmdpZoR/iW2BZnJ2a350c39hf3Rqd2N8cGVzaFtuVW9danpvcWRVUlRmY2h5YGBwW1djXGVjcnZqendsiXVwbICNkIR+c4iJhI+KnZqKoISRjoiAmYGSo4uJl5Wbo46PjYOfoKCHn5+WnpSKgoN7gpGTmZaGjIeSin+IlHyPcnVxgYqGd4d1boJ7fXuGdn97gHJ5c2ljbl11X1hYcmRcVlRpa3B0X21ndnl+ZXuAhGtqZWF6fnyEgHZubIBzdnpudHaFf36SiZSQfoeIk4mUkYeahZmIgYSVoIaRkpuLko6cjaCPipaShpKDlZWZlYyLiZaAlH19fY6GgY59gIGHiIV7eHGBf4FxdX15a3F9bWhpdHloZWVma2JlYXZ0ZHlkaXl4d3BocmVlaWFpdXZzd3RrdnN8g3l9gnt1gYiIiI2KiYWAh3uBjI2NhIeIjYmQmIiRlo6PnIeQh5WclIiRkZaSlZqTj5uLlI2VhpiLgoSGfIOEioOAfYiPh36JgHp2g4WCfn92hXh9gYJ6dHdte3F8b3BsbmljcmpoaW1scXNteXppeHt6bHl3aWZ5d29qamt4cm5+f3OBfoOCh4eJfISCh4KLhoB+e4J6gn2EhoiQgZCLjY+UjIyXhpCRhY6Rl42ZkY+XhpGQi5SLjIyRhomIio+GjoeHgoWOiYyCgH2Cg4Z4goaAdXdwcX97fH+CfXx7fHp6cXh0eW1saHV6d3F5enZwb3BucHR7bXRra3d2fXZuc3d/gnt5c3t1c3BwfHSEd4R6doJ8hX16hoiMi4GIi4iQhpGPg4GKj4SGjYWQjISIi4qOho+JjY6KiY+TkY6Igo+Nj4eKkI6KhISLg4eFiomAeXt8f4OFeIKCg395gIB+gnlzeHxzen50eHl2cXB3eXVveHlxdXt8d3Z3cXBvd3N2dXdxb312cnl9dXt4e3RzgYN/gHyDf4eGiIuCfX59fHuCiYWMjoOJhoKNhYmLkI2KiYWPkoiEhYaOkJCFjY2MkYWDio6LhoiLgoOBfoJ+fnyDe4N9eYR8hYWGfH54goJ/fHp/e3x2dXJ5eHN8dXZyc3p1cnVzenJ7cXp5c3Zzc3FzfH5+dXV8c3t2f3R9eHZzfXt4eoF6fnl5gIF8enqAgH59goWHhYF/hoOHgIiEioyIgouIjIaEi4eEhoiCh4aHg4mLjYeKh4qDioyIh4eGgImCgH5/hX18gn57gICAgnuCgnp5fHx6d3p3e353e313fX96eX16eH18eHZ2dnx8fX19dXh9fnd4end5dHd4dHR8fX99f4CBeX16fnt9goB8f36Dfn6BfYGFgoCCg39+foCBgYF/g4eGhoeDiIaHiIeFhIOGhYeChImEh4aEioWJg4GIhYGDg4aBgYeGgYGBg4OFhYOEhISBg4KEfYJ6gH59gX58f4B+e3t7fXl5enl4fH16eXd3dXh5dXx4fHx+eHl9dnV5eX19e398fH17enx7gH9+enx8fn6Bg4CAgYSAgYR/gIWFg4CFhYaIiIWCgoSEgoGFhYSJh4KEh4SHgoOHhoeEhYaDhoWJhoWCgYWBgICChYSGgH6DgIOBf399goF/f358gX+Cf398eoCAfIB/fH2AfX97e315eX17fXl4eXd8eXp3enl5d3Z7eXh3eHh2enl4fHh5fXl7fn97fH59gX2Bf31+fIB+goGAf4F/g3+BgoCEgoODgoKAgIWChIGEg4SDgYKCgYWDg4eHiIiDg4GFhYODhYWChoOEgYCFhISAf39/f4B9f4B+goCBf3+AfnyAgH17f357e3p+e35+en17fX57eX17fn19fn17eXx7e315fHl8fXp7fn18e3l6e3p6en19e3t9fYB9fYB9f36Af4F+gICAgoN/gIB/fn9/goGAgYKBgIB/hISBhIaEgoODgoOBhYWFhoWDgoKBhIWDgoOFhoKEhYSCgYSBgYKBg4B/gYGCgoODgYB+fn99f31+gHx7fXx+e35/f318fX18e3x9fn57e3t8e3p5ent9fn5/f31+e319e3x+fX18fH57e319e359fn1+fn59fYB/fYF/fn9/gIB/gX+AgX+Af4GDgoODgYSEgYSCgYSDhIKEgYKCgYOBgoODhISFhIWFgoSChIOEgYKDhIOAgoCBgoCCgoB/gIGBf359gH5/fn9+fYB/f4CAfX18fX9/fHx+fn19e358fn17fHt9fXt7e3x8fHx6fHx6fH57e318fH18fX1/gH1+f4CAf39+foCAgYB/gYGAgYCAgH9/gIKBgYCAgIB/goGBgoGBgIGBgoKEgoSDgYGChIKDgoSBgoSCgYCBgYKBgYGCg4KBgoOCgIKCgYB/gIGBgoB/gIB/gH9+fn1/fn5/fn58f35/fX5+fXx8fH58fn19fX19fX1+fH1+fn1+f319fX58fH19fn1/fX59fHx8fX59f359fX+Afn1/foB/gH+AgH+Bf4F/gYCBgIGAgoKCgYGAgYCAgoKBg4GCgYODgoODgoKCg4GCgoKCg4GDgoKDgYODgYCAgoCCgIGAgIF/gIGBgYJ/f4CAf39/f359gH6Afn5+fn1+fX5+fX1+f359f39+fX19fHx9fX19fH1+fX1+f39+fn19f359fX1/fX5/fn5+fn19f3+Afn9+f39/gH6AgICAgYCAgYCBgICBgYCBgYCBgIKBgoGBgYCCgYGBgoGBgoGCgoODgYGCgoGBgYCBgoGBgIGCgoGBgoKAgYCBgICAgH9/gH9/gH9/f4B/f4B/f4B/f35+fn9+fn9/fn5+f35/f35+fn1+fn5+f359fn5+fn5+fn5+fn5+fn59fn5/f35+fX99fX9+fn9/f35/f3+AgIB/f39/gH9/f3+AgICAf4CBgYGAgICAgICBgYGBgIKBgIGBgYGBgYKBgYKBgYKBgoGBgYCBgIGAgYGBgYGBgICBgIGAgH+AgYCAgIGAf3+Af4B/f39/f3+Af4B+f4B/fn5/fn5+fn9+f35/fn9/f35+fn5+f35+f35+fX19fn9+f35+f35/f35+fn5/fn9+fn9+f39/f35/fn9/f39/gH9/gH+AgIB/f4CAgICAgICAgICAgICAgIGBgYCBgYGBgYGBgICAgIGAgYCBgIGBgYCAgYGAgYGBgIGBgYCBgICAgICAgIB/f39/gICAgICAgICAf3+AgH9/f35/f39+f39/f39/f39/f39+f39/fn9/fn9+fn5+fn9/f35/f39/f39+f39+f39/fn9+fn9/f39/f39/f39/f39/gIB/gH+Af3+AgICAgIGAgIGAgYCBgICAgIGAgYCAgICBgYCBgYGAgYGBgYGBgYGBgYGAgYCBgYGAgYGBgYCAgIGBgICAgICAgICAgICAgICAgH+AgIB/f3+AgH9/f39/f39/fn5+f39/fn9+fn5+fn5+f35+f35/f39+fn9/f39/fn5/f35/fn9+f39/f39/fn9/f39/f39/gH+AgH+AgH9/gIB/gICAgICAgH+AgICAgICAgICAgYCAgYCBgYGBgYGAgYGBgICAgYCAgICAgYGAgYCBgICAgICAgICAgICAgICAgICAgICAgIB/gH+Af39/gIB/f39/gICAgH+Af39/f39/f39/f39+f39/fn9+fn9/f39/f39/fn5+f39/f39+f39/fn5/f39/f39/f39/f39/f39/f39/f39/f4CAgIB/gIB/f3+AgH+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIB/gH+AgH+Af4B/gICAf4B/gH9/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/gICAgIB/f39/f4CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIB/gICAgICAf3+Af39/gH9/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f4CAf3+AgH+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA","draw":"UklGRsEIAABXQVZFZm10IBAAAAABAAEAESsAABErAAABAAgAZGF0YZ0IAACAqsrY0LOKXzspLERrl73T1MCbb0gvKjteirLO1calelE0KjdXgqvJ1Mipf1U3LDdWf6nI08eoflU3LTlZg6zJ0cOjeFA1Lz9hjLPLz7yYbUgyMklvmbzOya+IXj4xOliBqsbOvp1yTDU0SW6Yu8zGq4NaPDNAYYqxyMm0j2VENDxYgKjEyrmXbUk2OlR7pMHJu5pwTDg6U3qiwMi6mW9LODxWfaXAx7aUa0k4QFyEqsLFsItjRDlGZo6yxMCmf1g/PE90nLrFt5dvTDtCXoWrwcCphF1CPU9ymrjDtZVtTD1GY4uuwbyie1ZAQVh+pL2/qoZfRT9SdZy4wK+NZkk/Tm+Wtb+ykmtMQExsk7O/s5NsTUFNbJOyvrGSa0xCT2+Ws72ujWdKQ1N1m7a7qYZhSEVZfaK4uKF9WUVJY4iqurOWcVFFUG+VsrqqiGNKR1x/o7e1nHdWRk9ska+5qoplTEhdgKO3s5l0VEdTcZaxtqSCX0pNZoqqt6uNaE5KXYCitbCVcVNJWHibsrKbeFhKVHKWsLOffVxLU2+TrrOhf15MUm2RrLOhgF5NU26RrLKgf15NVHCTrbGdfFxNV3SXrq+Zd1lOW3qcsKyTcFVPYYGhsKeLaFJSaYunsKCAYFBXc5WsrZd1WFBgf5+vpopoU1Rsjaium3tdUV17m62njWtUVGuMp62be11SXn2craWJaVRXb5CoqpV1WlNlhKGsn4BiU116maulimpVWHGRqKiScllWaoqkqph5XVVkg6CqnX9hVWF+nKqfg2VWX3qZqaGGZ1ZdeJeooohpV113lqiiiGpYXXeWp6KIaVheeJanoIZoWGB6mKeeg2ZYYn6bp5t/Y1hmg56ml3pgWWqIoaWSdF1bcI+joottW194laWdg2ZaZYGcpZZ5YFttiqGijXBcX3eUpJyCZ1tng5yjk3ZfXXKPop+Ha1xkf5qjlXlhXXCNoZ+IbF1lf5milHhhXnKOoZ2Fal1ngpuhkHRgYXeToZl/Zl5tiZ6eiW1eZoCZoZF2YWF3kqCYfmVfcIuenIVrX2qEm56McGBmfpefkXZiY3mTn5V7ZGF0j5+Yf2dhcYyemoJpYG6JnJuFa2Fthpubh21ha4WanIhuYWuEmpyJb2FrhJmciG9ia4SZm4huYmyFmpqGbWJuh5qZhGxjcImbl4FqY3OMnJV+aGR2j5ySemZmepOcj3ZlaX+Wm4pxZG2FmJiEbWRyipqVfmlmeJCbkHdmaX+VmolxZW+GmJaBa2Z2jpqQeWdpfpSZiXFlcIeYlX9qZ3iQmY12ZmyClpeEbWZ1jJmQeWhrf5SXhm9mc4qYkXpoan+Tl4ZwZ3OLmJB6aWuAlJaFb2d1jJiOd2htg5WUgWxpeY+XinRocYeWkXxqbH+TlYRvaXeNl4t1aHGGlpF8a2x/k5WDb2l5jpaJdGlziZaOeWpvg5SSf2xsfpGUhG9qeY6ViHNqdYqVjHdqcoaVj3prb4OTkX5sbX+Sk4FubH2Qk4Rwa3qOlIZya3iMlIhza3aLlIl1a3WKlIp2a3SJlIt3a3SIlIt3a3SIk4t3bHSIk4t3bHSIk4t3bHWIk4p2bHaJk4l1bHeKk4h0bHiLkoZzbXqNkoRxbnyOkYJwb3+QkH9vcIGRjnxucoSSjHltdYeSiXZteIqShXNue42QgnFwgI+OfW9yhJGLeW52iJGHdW56jJCCcXB/j459b3OFkYp4bniKkIVzb32Ojn9wcoOQinlvd4mQhXRwfY2OfnBzhJCJeG95io+DcnGAjox8cHaHkIZ1cH2Njn9xdISPiHdweouOgXJzgo+KeXB5io+Cc3KBjop6cHmJjoJzcoGOinlweYmOgnNzgo6JeXB6io6AcnSDjod3cXyLjH5xdoaOhXVyf42Le3F4iI6Cc3SCjoh4cXyLjH5yd4aOhHVzgY2JeXF7iox+cnaGjYR1c4GNiHlyfIqLfnJ3h42CdHSCjYd3cn6LintyeomMf3N3hY2DdXSCjId4c36LiXtye4mLfnN4hoyCdHaEjIR2dIGMh3hzfouJe3N7iYp9c3mHi4B0d4WMgnV2hIyEdnWCjIZ4dICLh3l0foqIenN9iol8c3uJin10eoiKfnR5h4t/dHmGi4B1eIaLgXV4hYuBdXeFi4J1d4SLgnZ3hIuCdneEi4J2d4SLgnZ3hIuCdniEioF2eIWKgXV4hYqAdXmGin91eoaJfnV6h4l9dXuIiHx1fIiIe3V+iYd6dX+Jhnl2gYqEeHeCioN3eISKgXZ5hYl/dnuHiH11fIiHe3Z/iYV5doGJg3h3g4mBd3mFiX92e4eIfHZ+iIZ6doCJg3h4g4mBd3qGiH52fIeGe3Z/iYR5eIOJgXd6hYh+dn2Hhnt3gImDeHiDiIB3e4aHfHZ/iIR5eIKIgXd6hod9d36IhXp4goiBd3qFh313foiEeniCiIF3e4aHfHd/iIR5eYOIf3d8hoZ7eIGIgnh6hYd9d36HhHl5g4h/d3yGhXt4gYiBeHuFhnx4gIeCeXqEh313f4eDeXmDh354foeEenmDh394fYeEenmCh394fYaEenmCh394fYaEenmDh394foaEenmDh354foeDenqEhn54f4eCeXuEhnx4gIeBeXyFhXt5god/eH2Gg3p6g4Z+eH+Ggnl7hYV8eYGGgHl9hoN6eoOGfXmAhoF5fIWEe3qChn55f4aCeXyFhXx5goZ/eX+Ggnp8hIV8eoKGf3l/hoJ6fIWEfHqChn55f4aBeX2FhHt7g4V9eYCGgHl+hYJ6fISEfHqChX55gIaBeX2Fg3t7hIR8eoKFfnmAhoB6foWCenyEhHx6goV+eoGFf3p/hYF6fYWDe3uDhHx6goV+eoCFf3p/hYF6fYWCe3yEhHx7g4R9eoGFfnqAhYB6f4WBen6Fgnt9hIN7fIOEfHuChH16gYV+eoCFf3o="}}</script>
+
+<script>
+(() => {
+'use strict';
+
+/* =====================================================================
+   CONFIG - everything you are likely to tweak lives here
+   ===================================================================== */
+const CFG = {
+  gridW: 24, gridH: 23,            // tiles (x runs down-right, z runs down-left)
+  playerSpeed: 4.2,                // tiles / second
+  playerRadius: 0.28,
+  viewHeight: 9,                   // world units visible vertically (landscape)
+  minViewWidth: 13,                // world units kept visible horizontally (portrait phones)
+  maxPixelRatio: 2,
+  sky: 0xf0c89c,
+  fogNear: 100, fogFar: 165,                  // iso camera sits ~104 units from the focus point
+  sunColor: 0xffa24f, sunIntensity: 0.80,   // late-afternoon sun
+  ambColor: 0xd7a58e, ambIntensity: 0.46,
+  tiltBlurPx: 7, tiltFocus: 0.24,           // tilt-shift: max blur radius (px) and sharp band half-height
+  vignette: 0.32,
+  triggerRadius: 4.3,              // tiles: how close before a duel starts
+};
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+                 (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+const SHADOW_RES = isMobile ? 1536 : 2048;
+
+/* ---------- tiny helpers ---------- */
+const $ = id => document.getElementById(id);
+const SQ = Math.SQRT1_2;
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+const lerpAngle = (a, b, t) => {
+  const d = ((b - a + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
+  return a + d * t;
+};
+function mulberry(seed) {
+  return () => {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rand = mulberry(1886);
+
+/* =====================================================================
+   EMBEDDED ASSET FRAMEWORK: base64 payloads from #asset-pack -> WebAudio buffers.
+   Browsers and Android WebViews need a user gesture before audio can start,
+   so Assets.unlock() is called from the first touch / key press.
+   ===================================================================== */
+const Assets = (() => {
+  let pack = { sounds: {} };
+  try { pack = JSON.parse($('asset-pack').textContent); } catch (e) { console.warn('asset pack unreadable', e); }
+  let ctx = null;
+  const buffers = {};
+  const toBuffer = b64 => {
+    const bin = atob(b64), u = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+    return u.buffer;
+  };
+  function unlock() {
+    if (ctx) { if (ctx.state === 'suspended' && ctx.resume) ctx.resume(); return; }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    ctx = new AC();
+    if (ctx.resume) ctx.resume();
+    Object.keys(pack.sounds || {}).forEach(name => {
+      try { ctx.decodeAudioData(toBuffer(pack.sounds[name]), b => { buffers[name] = b; }, () => {}); } catch (e) { /* skip */ }
+    });
+  }
+  function play(name, volume = 1, rate = 1) {
+    if (!ctx || !buffers[name]) return;
+    const src = ctx.createBufferSource();
+    src.buffer = buffers[name];
+    src.playbackRate.value = rate;
+    const gain = ctx.createGain();
+    gain.gain.value = volume;
+    src.connect(gain); gain.connect(ctx.destination);
+    src.start(0);
+  }
+  return { unlock, play };
+})();
+
+/* =====================================================================
+   RENDERER, SCENE, CAMERAS
+   ===================================================================== */
+const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+renderer.shadowMap.enabled = true;                    // full shadow mapping
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;     // soft shadow edges
+renderer.domElement.id = 'gl';
+document.body.insertBefore(renderer.domElement, document.body.firstChild);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(CFG.sky);
+scene.fog = new THREE.Fog(CFG.sky, CFG.fogNear, CFG.fogFar);
+
+// True isometric: the camera sits on the (1,1,1) diagonal (distance = CAM_D * sqrt(3)), looking at the focus point.
+const CAM_D = 60;
+const ortho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 300);
+const fpCam = new THREE.PerspectiveCamera(40, 1, 0.1, 200);   // duel camera
+let activeCam = ortho;
+let viewH = CFG.viewHeight;
+let zoom = 1;
+const focus = { x: 12.5, z: 6.5 };
+
+/* =====================================================================
+   POST-PROCESSING: render to a (multisampled) target, then one fullscreen
+   pass does tilt-shift blur + warm grade + vignette + flash.
+   ===================================================================== */
+const rtOpts = { format: THREE.RGBAFormat, type: THREE.UnsignedByteType,
+                 minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter };
+const hasGL2 = !!renderer.capabilities.isWebGL2;
+const rt = hasGL2 ? new THREE.WebGLMultisampleRenderTarget(4, 4, rtOpts)
+                  : new THREE.WebGLRenderTarget(4, 4, rtOpts);
+if (hasGL2) rt.samples = 4;
+
+const U = {
+  tDiffuse: { value: rt.texture },
+  uTexel: { value: new THREE.Vector2(1, 1) },
+  uBlur: { value: CFG.tiltBlurPx },
+  uFocus: { value: CFG.tiltFocus },
+  uVignette: { value: CFG.vignette },
+  uFlash: { value: new THREE.Color(1, 1, 1) },
+  uFlashAmt: { value: 0 },
+};
+const postMat = new THREE.ShaderMaterial({
+  uniforms: U, depthTest: false, depthWrite: false,
+  vertexShader: `
+    varying vec2 vUv;
+    void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+  fragmentShader: `
+    varying vec2 vUv;
+    uniform sampler2D tDiffuse;
+    uniform vec2 uTexel;
+    uniform float uBlur, uFocus, uVignette, uFlashAmt;
+    uniform vec3 uFlash;
+    void main() {
+      // Tilt-shift: no blur in a horizontal band across the middle, growing toward top/bottom.
+      float d = abs(vUv.y - 0.5);
+      float radius = uBlur * smoothstep(uFocus, 0.5, d);
+      vec3 col = texture2D(tDiffuse, vUv).rgb;
+      if (radius > 0.4) {
+        vec3 sum = col; float tot = 1.0;
+        for (int i = 0; i < 12; i++) {
+          float fi = float(i);
+          float a = fi * 2.39996323;                 // golden-angle disc
+          float r = sqrt((fi + 0.5) / 12.0);
+          sum += texture2D(tDiffuse, vUv + vec2(cos(a), sin(a)) * r * radius * uTexel).rgb;
+          tot += 1.0;
+        }
+        col = sum / tot;
+      }
+      // warm desert grade
+      float l = dot(col, vec3(0.2126, 0.7152, 0.0722));
+      col = mix(vec3(l), col, 1.14);
+      col = (col - 0.5) * 1.07 + 0.5;
+      col *= vec3(1.03, 1.0, 0.94);
+      float v = smoothstep(0.35, 0.85, length(vUv - 0.5) * 1.2);
+      col *= 1.0 - v * uVignette;
+      col = mix(col, uFlash, uFlashAmt);
+      gl_FragColor = vec4(col, 1.0);
+    }`,
+});
+const postScene = new THREE.Scene();
+const postQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), postMat);
+postQuad.frustumCulled = false;
+postScene.add(postQuad);
+const postCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+/* ---------- resize: high-DPI aware, keeps the iso view framed on any aspect ---------- */
+let pixelRatio = Math.min(window.devicePixelRatio || 1, CFG.maxPixelRatio);
+function resize() {
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setPixelRatio(pixelRatio);
+  renderer.setSize(w, h);
+  const size = renderer.getDrawingBufferSize(new THREE.Vector2());
+  rt.setSize(size.x, size.y);
+  U.uTexel.value.set(1 / size.x, 1 / size.y);
+  const aspect = w / h;
+  viewH = Math.max(CFG.viewHeight, CFG.minViewWidth / aspect);   // portrait phones zoom out a bit
+  ortho.left = -viewH * aspect / 2; ortho.right = viewH * aspect / 2;
+  ortho.top = viewH / 2; ortho.bottom = -viewH / 2;
+  ortho.updateProjectionMatrix();
+  fpCam.aspect = aspect; fpCam.updateProjectionMatrix();
+}
+
+/* =====================================================================
+   LIGHTING: warm ambient + strong low sun with soft shadow maps
+   ===================================================================== */
+scene.add(new THREE.AmbientLight(CFG.ambColor, CFG.ambIntensity));
+const sun = new THREE.DirectionalLight(CFG.sunColor, CFG.sunIntensity);
+const MAPC = { x: CFG.gridW / 2, z: CFG.gridH / 2 };
+sun.position.set(MAPC.x - 20, 12, MAPC.z + 7);       // low sun from the west => long shadows toward +x
+sun.target.position.set(MAPC.x, 0, MAPC.z);
+sun.castShadow = true;
+sun.shadow.mapSize.set(SHADOW_RES, SHADOW_RES);
+Object.assign(sun.shadow.camera, { left: -23, right: 23, top: 23, bottom: -23, near: 1, far: 90 });
+sun.shadow.camera.updateProjectionMatrix();
+sun.shadow.bias = -0.0004;
+sun.shadow.normalBias = 0.03;
+scene.add(sun, sun.target);
+
+/* =====================================================================
+   TOON MATERIALS (cel shading through a stepped gradient ramp)
+   ===================================================================== */
+const rampVals = [76, 76, 133, 184, 235, 255];
+const rampData = new Uint8Array(rampVals.length * 4);
+rampVals.forEach((v, i) => rampData.set([v, v, v, 255], i * 4));
+const gradientMap = new THREE.DataTexture(rampData, rampVals.length, 1, THREE.RGBAFormat);
+gradientMap.minFilter = gradientMap.magFilter = THREE.NearestFilter;
+gradientMap.generateMipmaps = false;
+gradientMap.needsUpdate = true;
+
+const toonCache = new Map();
+const toon = hex => {
+  if (!toonCache.has(hex)) toonCache.set(hex, new THREE.MeshToonMaterial({ color: hex, gradientMap }));
+  return toonCache.get(hex);
+};
+const edgeMat = new THREE.LineBasicMaterial({ color: 0x2b1a12, transparent: true, opacity: 0.5 });
+const unitBox = new THREE.BoxGeometry(1, 1, 1);
+
+function mesh(geo, hex, opts = {}) {
+  const m = new THREE.Mesh(geo, toon(hex));
+  m.castShadow = opts.cast !== false;
+  m.receiveShadow = opts.receive !== false;
+  return m;
+}
+function box(w, h, d, hex, x, y, z, parent, opts) {
+  const m = mesh(new THREE.BoxGeometry(w, h, d), hex, opts);
+  m.position.set(x, y, z);
+  parent.add(m);
+  return m;
+}
+const addEdges = m => m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), edgeMat));
+
+/* =====================================================================
+   GRID + WORLD DATA
+   ===================================================================== */
+const W = CFG.gridW, H = CFG.gridH;
+const solid = [], road = [];
+for (let z = 0; z < H; z++) {
+  solid.push(new Uint8Array(W));
+  road.push(new Uint8Array(W));
+  for (let x = 0; x < W; x++) {
+    road[z][x] = ((z >= 8 && z <= 10) || (z >= 18 && z <= 20) || (x >= 11 && x <= 13)) ? 1 : 0;
+  }
+}
+const markSolid = (x, z, w, d) => {
+  for (let j = z; j < z + d; j++) for (let i = x; i < x + w; i++) {
+    if (j >= 0 && j < H && i >= 0 && i < W) solid[j][i] = 1;
+  }
+};
+const BUILDINGS = [
+  { name: 'SALOON',        x: 2,  z: 2,  w: 6, d: 5, h: 3.0, body: 0xc4673f, roof: 0x6b4129, front: 1.1, porch: true,  awning: 0x8a3b24 },
+  { name: 'BANK',          x: 15, z: 2,  w: 6, d: 5, h: 3.4, body: 0xe0b983, roof: 0x7a5636, front: 0.9, porch: false },
+  { name: 'STABLE',        x: 1,  z: 12, w: 5, d: 5, h: 2.3, body: 0x9a6b3f, roof: 0x5a3a24, gable: true },
+  { name: 'GENERAL STORE', x: 7,  z: 12, w: 3, d: 5, h: 2.6, body: 0xd49a6a, roof: 0x6b4129, front: 0.7, porch: true,  awning: 0x5c7a8c },
+  { name: 'HOTEL',         x: 15, z: 12, w: 7, d: 5, h: 3.9, body: 0xb85a38, roof: 0x6b4129, front: 0.8, porch: true,  awning: 0x8a3b24 },
+];
+BUILDINGS.forEach(b => markSolid(b.x, b.z, b.w, b.d));
+markSolid(9, 3, 2, 2);   // water tower
+
+/* ---------- ground texture (painted procedurally, then lit by the sun) ---------- */
+function makeGroundTexture() {
+  const S = 1024, c = document.createElement('canvas');
+  c.width = c.height = S;
+  const g = c.getContext('2d');
+  const sx = S / W, sz = S / H;
+  g.fillStyle = '#d6ae76'; g.fillRect(0, 0, S, S);
+  for (let i = 0; i < 700; i++) {                       // large soft blotches
+    g.fillStyle = `rgba(${150 + rand() * 60 | 0},${108 + rand() * 50 | 0},${68 + rand() * 40 | 0},${0.05 + rand() * 0.08})`;
+    const r = 12 + rand() * 46;
+    g.beginPath(); g.ellipse(rand() * S, rand() * S, r, r * 0.7, rand() * 3, 0, 6.283); g.fill();
+  }
+  // contact shadows / ambient occlusion under each building
+  g.save();
+  g.shadowColor = 'rgba(70,40,22,0.55)'; g.shadowBlur = 30;
+  g.fillStyle = '#c9a06a';
+  BUILDINGS.forEach(b => g.fillRect(b.x * sx, b.z * sz, b.w * sx, b.d * sz));
+  g.restore();
+  // roads with a soft dusty shoulder
+  g.save();
+  g.shadowColor = 'rgba(156,112,70,0.6)'; g.shadowBlur = 38;
+  g.fillStyle = '#b98b59';
+  for (let z = 0; z < H; z++) for (let x = 0; x < W; x++) if (road[z][x]) g.fillRect(x * sx, z * sz, sx + 0.5, sz + 0.5);
+  g.restore();
+  g.strokeStyle = 'rgba(118,80,48,0.38)'; g.lineWidth = 3;     // wheel ruts
+  const rut = (x0, z0, x1, z1) => {
+    g.beginPath(); g.moveTo(x0 * sx, z0 * sz);
+    const n = 40;
+    for (let i = 1; i <= n; i++) {
+      const t = i / n;
+      g.lineTo(lerp(x0, x1, t) * sx + (rand() - 0.5) * 2, lerp(z0, z1, t) * sz + (rand() - 0.5) * 2);
+    }
+    g.stroke();
+  };
+  [9.22, 9.78, 19.22, 19.78].forEach(zz => rut(0, zz, W, zz));
+  [12.22, 12.78].forEach(xx => rut(xx, 0, xx, H));
+  for (let i = 0; i < 7000; i++) {                       // grit
+    const t = rand();
+    g.fillStyle = t < 0.5 ? 'rgba(110,76,46,0.22)' : 'rgba(240,214,164,0.22)';
+    g.fillRect(rand() * S, rand() * S, 1 + rand() * 2.2, 1 + rand() * 2.2);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.anisotropy = 8;
+  return tex;
+}
+
+const worldGroup = new THREE.Group();
+scene.add(worldGroup);
+
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(W, H),
+  new THREE.MeshToonMaterial({ map: makeGroundTexture(), gradientMap }));
+ground.rotation.x = -Math.PI / 2;
+ground.position.set(W / 2, 0, H / 2);
+ground.receiveShadow = true;
+worldGroup.add(ground);
+
+const farGround = new THREE.Mesh(new THREE.PlaneGeometry(260, 260), toon(0xd2aa72));
+farGround.rotation.x = -Math.PI / 2;
+farGround.position.set(W / 2, -0.02, H / 2);
+farGround.receiveShadow = true;
+worldGroup.add(farGround);
+
+/* ---------- optional grid overlay (button top-right) ---------- */
+const gridLines = (() => {
+  const pts = [];
+  for (let x = 0; x <= W; x++) pts.push(x, 0.03, 0, x, 0.03, H);
+  for (let z = 0; z <= H; z++) pts.push(0, 0.03, z, W, 0.03, z);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  const l = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: 0x3a1f10, transparent: true, opacity: 0.16 }));
+  l.visible = false;
+  worldGroup.add(l);
+  return l;
+})();
+$('gridBtn').addEventListener('click', () => { gridLines.visible = !gridLines.visible; });
+
+/* ---------- sign textures ---------- */
+function signTexture(text, bg, fg) {
+  const c = document.createElement('canvas');
+  c.width = 512; c.height = 128;
+  const x = c.getContext('2d');
+  x.fillStyle = bg; x.fillRect(0, 0, 512, 128);
+  x.strokeStyle = fg; x.lineWidth = 6; x.strokeRect(8, 8, 496, 112);
+  let size = 64;
+  x.font = `bold ${size}px Georgia,serif`;
+  while (x.measureText(text).width > 450 && size > 20) { size -= 4; x.font = `bold ${size}px Georgia,serif`; }
+  x.fillStyle = fg; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText(text, 256, 68);
+  const t = new THREE.CanvasTexture(c);
+  t.anisotropy = 4;
+  return t;
+}
+
+/* ---------- buildings: stylised low-poly blocks ---------- */
+const winMats = { glass: toon(0x2a2530), frame: toon(0xf0dcb0) };
+const winInst = { glass: [], frame: [] };   // collected, then drawn as two InstancedMeshes
+function queueBox(list, x, y, z, sx, sy, sz) {
+  list.push({ x, y, z, sx, sy, sz });
+}
+
+function addBuilding(b) {
+  const cx = b.x + b.w / 2, cz = b.z + b.d / 2, zf = b.z + b.d;   // zf = front (+z) face
+  const grp = new THREE.Group();
+  worldGroup.add(grp);
+
+  box(b.w + 0.14, 0.26, b.d + 0.14, 0x8a7358, cx, 0.13, cz, grp);                // stone plinth
+  const body = box(b.w, b.h, b.d, b.body, cx, b.h / 2, cz, grp);
+  addEdges(body);
+
+  if (b.gable) {                                                                  // gabled roof (extruded triangle)
+    const hw = b.w / 2 + 0.25, rise = 1.3, s = new THREE.Shape();
+    s.moveTo(-hw, 0); s.lineTo(hw, 0); s.lineTo(0, rise); s.closePath();
+    const roof = mesh(new THREE.ExtrudeGeometry(s, { depth: b.d + 0.5, bevelEnabled: false }), b.roof);
+    roof.position.set(cx, b.h, b.z - 0.25);
+    grp.add(roof);
+  } else {
+    box(b.w + 0.3, 0.24, b.d + 0.3, b.roof, cx, b.h + 0.12, cz, grp);             // flat roof slab
+  }
+  if (b.front) {                                                                  // western false front
+    box(b.w, b.front, 0.35, b.body, cx, b.h + 0.24 + b.front / 2, zf - 0.175, grp);
+    box(b.w + 0.2, 0.16, 0.5, b.roof, cx, b.h + 0.24 + b.front + 0.08, zf - 0.2, grp);
+  }
+
+  const sign = new THREE.Mesh(new THREE.PlaneGeometry(Math.min(b.w * 0.7, 3.4), 0.62),
+    new THREE.MeshBasicMaterial({ map: signTexture(b.name, '#3b2417', '#f3d9a0') }));
+  sign.position.set(cx, b.front ? b.h + 0.24 + b.front / 2 : 2.1, zf + 0.04);
+  grp.add(sign);
+
+  box(0.95, 1.65, 0.12, 0x4a2f1b, cx, 0.26 + 0.82, zf + 0.03, grp, { cast: false });   // door
+
+  const cols = Math.floor(b.w / 1.8);
+  const rows = b.h >= 3.3 ? [1.55, 3.0] : [1.55];
+  for (let i = 0; i < cols; i++) {
+    const wx = b.x + (b.w / (cols + 1)) * (i + 1);
+    if (Math.abs(wx - cx) < 1.0) continue;
+    rows.forEach(wy => {
+      queueBox(winInst.frame, wx, wy, zf + 0.01, 0.9, 1.05, 0.08);
+      queueBox(winInst.glass, wx, wy, zf + 0.03, 0.66, 0.82, 0.08);
+    });
+  }
+  const colsX = Math.floor(b.d / 1.8);
+  for (let i = 0; i < colsX; i++) {
+    const wz = b.z + (b.d / (colsX + 1)) * (i + 1);
+    rows.forEach(wy => {
+      queueBox(winInst.frame, b.x + b.w + 0.01, wy, wz, 0.08, 1.05, 0.9);
+      queueBox(winInst.glass, b.x + b.w + 0.03, wy, wz, 0.08, 0.82, 0.66);
+    });
+  }
+
+  if (b.porch) {                                                                  // boardwalk, posts, awning
+    const pd = 0.95;
+    box(b.w, 0.12, pd, 0x8a6238, cx, 0.06, zf + pd / 2, grp);
+    const awn = box(b.w, 0.1, pd + 0.15, b.awning || 0x6b4129, cx, 2.05, zf + pd / 2 + 0.05, grp);
+    awn.rotation.x = 0.1;
+    const n = Math.max(2, Math.round(b.w / 2.2));
+    for (let i = 0; i <= n; i++) {
+      const px = b.x + 0.15 + (b.w - 0.3) * (i / n);
+      const post = mesh(new THREE.CylinderGeometry(0.06, 0.07, 1.95, 6), 0x7b5230);
+      post.position.set(px, 1.03, zf + pd - 0.08);
+      grp.add(post);
+    }
+  }
+}
+BUILDINGS.forEach(addBuilding);
+
+(function flushWindows() {
+  const m = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3(), s = new THREE.Vector3();
+  Object.keys(winInst).forEach(k => {
+    const list = winInst[k];
+    const inst = new THREE.InstancedMesh(unitBox, winMats[k], list.length);
+    list.forEach((o, i) => {
+      p.set(o.x, o.y, o.z); s.set(o.sx, o.sy, o.sz);
+      m.compose(p, q, s);
+      inst.setMatrixAt(i, m);
+    });
+    inst.instanceMatrix.needsUpdate = true;
+    inst.receiveShadow = true;
+    inst.frustumCulled = false;   // r128 culls instances by the base box at the origin
+    worldGroup.add(inst);
+  });
+})();
+
+/* ---------- water tower, props ---------- */
+(function waterTower() {
+  const g = new THREE.Group();
+  g.position.set(10, 0, 4);
+  worldGroup.add(g);
+  [[-0.7, -0.7], [0.7, -0.7], [-0.7, 0.7], [0.7, 0.7]].forEach(([x, z]) => {
+    const leg = mesh(new THREE.CylinderGeometry(0.07, 0.1, 3.6, 5), 0x6b4a2b);
+    leg.position.set(x, 1.8, z);
+    g.add(leg);
+  });
+  const tank = mesh(new THREE.CylinderGeometry(1.05, 1.05, 1.5, 12), 0x9a6b3f);
+  tank.position.y = 4.35; g.add(tank);
+  const band = mesh(new THREE.CylinderGeometry(1.08, 1.08, 0.12, 12), 0x3a2418);
+  band.position.y = 4.1; g.add(band);
+  const cap = mesh(new THREE.CylinderGeometry(0.02, 1.2, 0.6, 12), 0x6b4129);
+  cap.position.y = 5.4; g.add(cap);
+})();
+
+function addCactus(x, z) {
+  const g = new THREE.Group(); g.position.set(x, 0, z);
+  const trunk = mesh(new THREE.CylinderGeometry(0.16, 0.2, 1.3, 6), 0x6c8f4e);
+  trunk.position.y = 0.65; g.add(trunk);
+  const top = mesh(new THREE.SphereGeometry(0.16, 6, 4), 0x6c8f4e);
+  top.position.y = 1.3; g.add(top);
+  [[-1, 0.7], [1, 0.95]].forEach(([side, y]) => {
+    const arm = mesh(new THREE.CylinderGeometry(0.09, 0.1, 0.5, 5), 0x6c8f4e);
+    arm.position.set(side * 0.3, y, 0); arm.rotation.z = side * -0.35;
+    const tip = mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.4, 5), 0x6c8f4e);
+    tip.position.set(side * 0.38, y + 0.35, 0);
+    g.add(arm, tip);
+  });
+  worldGroup.add(g);
+}
+function addRock(x, z) {
+  const r = mesh(new THREE.IcosahedronGeometry(0.3 + rand() * 0.3, 0), 0xb59b7c);
+  r.position.set(x, 0.16, z);
+  r.scale.set(1, 0.65 + rand() * 0.3, 0.8 + rand() * 0.4);
+  r.rotation.y = rand() * 6;
+  worldGroup.add(r);
+}
+function addBarrel(x, z) {
+  const g = new THREE.Group(); g.position.set(x, 0, z);
+  const b = mesh(new THREE.CylinderGeometry(0.28, 0.25, 0.6, 8), 0x8a5a30); b.position.y = 0.3; g.add(b);
+  const band = mesh(new THREE.CylinderGeometry(0.295, 0.295, 0.06, 8), 0x3a2418); band.position.y = 0.4; g.add(band);
+  worldGroup.add(g);
+}
+function addCrate(x, z, s) { box(s, s, s, 0xa0713f, x, s / 2, z, worldGroup); }
+
+addBarrel(3.0, 7.55); addBarrel(3.6, 7.6); addCrate(7.3, 7.55, 0.55);        // saloon porch / store front
+addBarrel(8.6, 17.5); addCrate(9.3, 17.45, 0.6);
+for (let i = 0; i < 3; i++) box(0.12, 0.9, 0.12, 0x6b4a2b, 1.8 + i * 1.7, 0.45, 17.6, worldGroup);   // hitching rail
+box(5.2, 0.1, 0.1, 0x6b4a2b, 4.0, 0.8, 17.6, worldGroup);
+
+let propTries = 0, cacti = 0, rocks = 0;
+const nearSolid = (x, z) => {
+  for (let j = z - 1; j <= z + 1; j++) for (let i = x - 1; i <= x + 1; i++) {
+    if (j < 0 || j >= H || i < 0 || i >= W || solid[j][i]) return true;
+  }
+  return false;
+};
+while ((cacti < 9 || rocks < 16) && propTries++ < 600) {
+  const x = 1 + (rand() * (W - 2) | 0), z = 1 + (rand() * (H - 2) | 0);
+  if (road[z][x] || nearSolid(x, z)) continue;
+  if (cacti < 9 && rand() < 0.5) { addCactus(x + 0.5, z + 0.5); solid[z][x] = 1; cacti++; }
+  else if (rocks < 16) { addRock(x + 0.2 + rand() * 0.6, z + 0.2 + rand() * 0.6); rocks++; }
+}
+
+// static scene: bake matrices once
+worldGroup.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
+
+/* =====================================================================
+   CHARACTERS (original low-poly cowboys) + circular ambient drop shadow
+   ===================================================================== */
+const blobTex = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(32, 32, 2, 32, 32, 31);
+  grad.addColorStop(0, 'rgba(30,14,6,0.65)');
+  grad.addColorStop(0.6, 'rgba(30,14,6,0.3)');
+  grad.addColorStop(1, 'rgba(30,14,6,0)');
+  g.fillStyle = grad; g.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(c);
+})();
+const blobMat = new THREE.MeshBasicMaterial({ map: blobTex, transparent: true, depthWrite: false,
+  polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+const blobGeo = new THREE.CircleGeometry(0.5, 20);
+
+function makeCowboy(o) {
+  const g = new THREE.Group();
+  const blob = new THREE.Mesh(blobGeo, blobMat);
+  blob.rotation.x = -Math.PI / 2; blob.position.y = 0.035; blob.scale.set(1.15, 1.15, 1);
+  g.add(blob);
+
+  const root = new THREE.Group();
+  root.rotation.order = 'YXZ';
+  g.add(root);
+
+  const legGeo = new THREE.CylinderGeometry(0.09, 0.1, 0.5, 6);
+  const legs = [-0.11, 0.11].map(x => {
+    const pivot = new THREE.Group(); pivot.position.set(x, 0.5, 0);
+    const m = mesh(legGeo, o.pants); m.position.y = -0.25;
+    pivot.add(m); root.add(pivot);
+    return pivot;
+  });
+  const torso = mesh(new THREE.CylinderGeometry(0.2, 0.24, 0.55, 8), o.shirt); torso.position.y = 0.78; root.add(torso);
+  const belt = mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.07, 8), 0x3a2418); belt.position.y = 0.53; root.add(belt);
+  const neck = mesh(new THREE.CylinderGeometry(0.17, 0.2, 0.1, 8), o.accent); neck.position.y = 1.07; root.add(neck);
+  const head = mesh(new THREE.SphereGeometry(0.17, 10, 8), 0xe2b48c); head.position.y = 1.26; root.add(head);
+  const brim = mesh(new THREE.CylinderGeometry(0.34, 0.34, 0.035, 12), o.hat); brim.position.y = 1.4; root.add(brim);
+  const crown = mesh(new THREE.CylinderGeometry(0.17, 0.2, 0.2, 10), o.hat); crown.position.y = 1.5; root.add(crown);
+  const hband = mesh(new THREE.CylinderGeometry(0.205, 0.205, 0.04, 10), o.accent); hband.position.y = 1.43; root.add(hband);
+
+  const mkArm = (side, withGun) => {
+    const pivot = new THREE.Group(); pivot.position.set(side * 0.28, 1.0, 0);
+    const arm = mesh(new THREE.CylinderGeometry(0.065, 0.07, 0.45, 6), o.shirt); arm.position.y = -0.22; pivot.add(arm);
+    const hand = mesh(new THREE.SphereGeometry(0.07, 6, 5), 0xe2b48c); hand.position.y = -0.47; pivot.add(hand);
+    let flash = null;
+    if (withGun) {
+      const gun = mesh(new THREE.BoxGeometry(0.07, 0.24, 0.1), 0x2a2a2e); gun.position.set(0, -0.56, 0.02); pivot.add(gun);
+      flash = new THREE.Mesh(new THREE.IcosahedronGeometry(0.2, 0),
+        new THREE.MeshBasicMaterial({ color: 0xffd27a, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+      flash.position.set(0, -0.8, 0.02); pivot.add(flash);
+    }
+    root.add(pivot);
+    return { pivot, flash };
+  };
+  const armL = mkArm(-1, false), armR = mkArm(1, true);
+  return { g, root, legs, armL: armL.pivot, armR: armR.pivot, flash: armR.flash, blob };
+}
+
+/* =====================================================================
+   GAME STATE
+   ===================================================================== */
+const START = { x: 12.5, z: 6.5 };
+const player = { x: START.x, z: START.z, dx: 0, dy: 0, facing: Math.PI * 0.75, moving: false, speed: 0, anim: 0 };
+const playerRig = makeCowboy({ shirt: 0x3f78b8, pants: 0x4a3b30, hat: 0xd9c08f, accent: 0xd9553a });
+scene.add(playerRig.g);
+playerRig.g.position.set(player.x, 0, player.z);
+
+const bandits = [
+  { x: 5.5,  z: 9.5,  difficulty: 0.25, look: { shirt: 0x8a2a22, pants: 0x2f2a2a, hat: 0x2a2220, accent: 0xe0b83a } },
+  { x: 18.5, z: 19.5, difficulty: 0.55, look: { shirt: 0x5a4a6a, pants: 0x2f2a2a, hat: 0x3a2a22, accent: 0xb8452e } },
+  { x: 12.5, z: 14.5, difficulty: 0.85, look: { shirt: 0x2f2f33, pants: 0x1f1c1c, hat: 0x141212, accent: 0xc9c2b0 } },
+].map((b, i) => {
+  const rig = makeCowboy(b.look);
+  scene.add(rig.g);
+  rig.g.position.set(b.x, 0, b.z);
+  return Object.assign(b, { rig, alive: true, facing: Math.PI * 0.25, seed: i * 1.7, armT: 0, fall: 0, flash: 0, hx: b.x, hz: b.z });
+});
+const leftEl = $('left');
+const updateLeft = () => { leftEl.textContent = 'Outlaws left: ' + bandits.filter(b => b.alive).length; };
+updateLeft();
+
+let mode = 'explore';   // explore | intro | wait | draw | result | outro
+const duel = { bandit: null, t: 0, waitFor: 0, drawAt: 0, windowMs: 0, win: false, shake: 0, fov: 40, fovTarget: 40, flashAmt: 0 };
+let vignetteTarget = CFG.vignette, focusBandTarget = CFG.tiltFocus, blurTarget = CFG.tiltBlurPx;
+
+/* =====================================================================
+   INPUT: virtual D-pad (pointer events work for touch + mouse), keyboard
+   ===================================================================== */
+const pad = { x: 0, y: 0, id: null };
+const padEl = $('pad'), knob = $('knob');
+function padUpdate(e) {
+  const r = padEl.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2, max = r.width / 2 - 14;
+  let vx = (e.clientX - cx) / max, vy = (e.clientY - cy) / max;
+  const len = Math.hypot(vx, vy);
+  if (len > 1) { vx /= len; vy /= len; }
+  const dead = 0.14;
+  pad.x = len < dead ? 0 : vx;
+  pad.y = len < dead ? 0 : vy;
+  knob.style.transform = `translate(${vx * max * 0.62}px, ${vy * max * 0.62}px)`;
+}
+const padReset = () => { pad.id = null; pad.x = pad.y = 0; knob.style.transform = 'translate(0px, 0px)'; };
+padEl.addEventListener('pointerdown', e => {
+  Assets.unlock();
+  e.preventDefault(); pad.id = e.pointerId;
+  if (padEl.setPointerCapture) padEl.setPointerCapture(e.pointerId);
+  padUpdate(e);
+});
+padEl.addEventListener('pointermove', e => { if (e.pointerId === pad.id) { e.preventDefault(); padUpdate(e); } });
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t =>
+  padEl.addEventListener(t, e => { if (e.pointerId === pad.id) padReset(); }));
+
+const keys = {};
+const kb = () => ({
+  x: (keys.ArrowRight || keys.KeyD ? 1 : 0) - (keys.ArrowLeft || keys.KeyA ? 1 : 0),
+  y: (keys.ArrowDown || keys.KeyS ? 1 : 0) - (keys.ArrowUp || keys.KeyW ? 1 : 0),
+});
+window.addEventListener('keydown', e => {
+  Assets.unlock();
+  keys[e.code] = true;
+  if (e.code === 'Space' || e.code === 'Enter' || e.code === 'KeyF') fire();
+  if (e.code === 'KeyG') gridLines.visible = !gridLines.visible;
+});
+window.addEventListener('keyup', e => { keys[e.code] = false; });
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+renderer.domElement.addEventListener('pointerdown', e => { Assets.unlock(); e.preventDefault(); fire(); });
+$('fire').addEventListener('pointerdown', e => { Assets.unlock(); e.preventDefault(); e.stopPropagation(); fire(); });
+
+/* =====================================================================
+   MOVEMENT (grid-space dx/dy -> world X/Z) with tile collision
+   ===================================================================== */
+function blocked(x, z) {
+  const r = CFG.playerRadius;
+  if (x < r + 0.2 || z < r + 0.2 || x > W - r - 0.2 || z > H - r - 0.2) return true;
+  const x0 = Math.floor(x - r), x1 = Math.floor(x + r), z0 = Math.floor(z - r), z1 = Math.floor(z + r);
+  for (let j = z0; j <= z1; j++) for (let i = x0; i <= x1; i++) if (solid[j][i]) return true;
+  return false;
+}
+
+function updatePlayer(dt) {
+  let ix = pad.x, iy = pad.y;
+  if (!ix && !iy) {
+    const k = kb(); const l = Math.hypot(k.x, k.y) || 1;
+    ix = k.x / l; iy = k.y / l;
+  }
+  // screen-space stick -> iso grid axes (screen up = -x,-z)
+  const gx = (ix + iy) * SQ, gy = (iy - ix) * SQ;
+  const ox = player.x, oz = player.z;
+  const wantX = gx * CFG.playerSpeed * dt, wantZ = gy * CFG.playerSpeed * dt;
+  if (!blocked(player.x + wantX, player.z)) player.x += wantX;       // axis-separated => slides along walls
+  if (!blocked(player.x, player.z + wantZ)) player.z += wantZ;
+  player.dx = player.x - ox;                                         // grid delta actually applied
+  player.dy = player.z - oz;
+  // grid delta -> Three.js X / Z offsets
+  playerRig.g.position.x += player.dx;
+  playerRig.g.position.z += player.dy;
+
+  player.speed = Math.hypot(player.dx, player.dy) / Math.max(dt, 1e-4);
+  player.moving = player.speed > 0.4;
+  if (player.moving) player.facing = lerpAngle(player.facing, Math.atan2(player.dx, player.dy), Math.min(1, dt * 14));
+  player.anim += dt * (player.moving ? 11 : 0);
+}
+
+/* =====================================================================
+   ANIMATION of rigs
+   ===================================================================== */
+function animatePlayer(t) {
+  const r = playerRig;
+  r.root.rotation.y = player.facing;
+  const s = player.moving ? Math.sin(player.anim) : 0;
+  r.legs[0].rotation.x = s * 0.7; r.legs[1].rotation.x = -s * 0.7;
+  r.armL.rotation.x = -s * 0.5; r.armR.rotation.x = s * 0.4;
+  r.root.position.y = player.moving ? Math.abs(s) * 0.05 : Math.sin(t * 2) * 0.008;
+  r.root.rotation.x = player.moving ? 0.07 : 0;
+}
+function animateBandit(b, t, dt) {
+  const r = b.rig;
+  if (b.alive || mode === 'result' || mode === 'outro') {
+    const near = Math.hypot(player.x - b.x, player.z - b.z);
+    if (b !== duel.bandit && near < 9) b.facing = lerpAngle(b.facing, Math.atan2(player.x - b.x, player.z - b.z), Math.min(1, dt * 3));
+  }
+  r.root.rotation.y = b.facing;
+  const drawing = b === duel.bandit && (mode === 'draw' || (mode === 'result' && !duel.win));
+  if (b === duel.bandit && (mode === 'draw' || mode === 'result' || mode === 'outro')) {
+    if (drawing) b.armT = Math.min(1, b.armT + dt / 0.13);
+    r.armR.rotation.x = -Math.PI / 2 * 0.96 * ease(b.armT);
+    if (duel.win) b.fall = Math.min(1, b.fall + dt / 0.6);
+  } else {
+    r.armR.rotation.x = 0.05; r.armL.rotation.x = 0;
+  }
+  const f = ease(b.fall);
+  r.root.rotation.x = -Math.PI / 2 * 0.97 * f;                       // topple backwards
+  r.root.position.y = lerp(Math.sin(t * 1.6 + b.seed) * 0.01, 0.22, f);
+  if (r.flash) {
+    b.flash = Math.max(0, b.flash - dt * 6);
+    r.flash.material.opacity = b.flash;
+  }
+}
+
+/* =====================================================================
+   DUST PARTICLES (point sprites, GPU-shaded)
+   ===================================================================== */
+const MAXD = 90;
+const dPos = new Float32Array(MAXD * 3), dVel = new Float32Array(MAXD * 3);
+const dLife = new Float32Array(MAXD).fill(1), dSize = new Float32Array(MAXD);
+const dAge = new Float32Array(MAXD).fill(99), dMax = new Float32Array(MAXD).fill(1);
+let dCursor = 0, dustTimer = 0;
+const dustGeo = new THREE.BufferGeometry();
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
+dustGeo.setAttribute('aLife', new THREE.BufferAttribute(dLife, 1));
+dustGeo.setAttribute('aSize', new THREE.BufferAttribute(dSize, 1));
+const dustU = { uScale: { value: 40 }, uColor: { value: new THREE.Color(0xdcbc8c) } };
+const dust = new THREE.Points(dustGeo, new THREE.ShaderMaterial({
+  uniforms: dustU, transparent: true, depthWrite: false,
+  vertexShader: `
+    attribute float aLife; attribute float aSize;
+    varying float vLife; uniform float uScale;
+    void main() {
+      vLife = aLife;
+      gl_PointSize = min(aSize * uScale * (0.7 + 1.1 * aLife), 96.0);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`,
+  fragmentShader: `
+    varying float vLife; uniform vec3 uColor;
+    void main() {
+      float d = length(gl_PointCoord - 0.5);
+      float a = smoothstep(0.5, 0.12, d) * (1.0 - vLife) * 0.55;
+      if (a < 0.01) discard;
+      gl_FragColor = vec4(uColor, a);
+    }`,
+}));
+dust.frustumCulled = false;
+dust.renderOrder = 2;
+scene.add(dust);
+
+function emitDust(x, z, vx, vz) {
+  const i = dCursor; dCursor = (dCursor + 1) % MAXD;
+  dPos[i * 3] = x + (rand() - 0.5) * 0.25; dPos[i * 3 + 1] = 0.1; dPos[i * 3 + 2] = z + (rand() - 0.5) * 0.25;
+  dVel[i * 3] = -vx * 0.3 + (rand() - 0.5) * 0.5;
+  dVel[i * 3 + 1] = 0.35 + rand() * 0.4;
+  dVel[i * 3 + 2] = -vz * 0.3 + (rand() - 0.5) * 0.5;
+  dAge[i] = 0; dMax[i] = 0.55 + rand() * 0.45; dSize[i] = 0.3 + rand() * 0.22;
+}
+function updateDust(dt) {
+  if (mode === 'explore' && player.moving && !solid[Math.floor(player.z)][Math.floor(player.x)]) {
+    dustTimer -= dt;
+    if (dustTimer <= 0) {
+      dustTimer = 0.055;
+      const vx = player.dx / dt, vz = player.dy / dt;
+      emitDust(player.x, player.z, vx, vz);
+      if (road[Math.floor(player.z)][Math.floor(player.x)]) emitDust(player.x, player.z, vx, vz);   // roads kick up more
+    }
+  }
+  for (let i = 0; i < MAXD; i++) {
+    if (dAge[i] >= dMax[i]) { dLife[i] = 1; continue; }
+    dAge[i] += dt;
+    const damp = 1 - dt * 2.2;
+    dVel[i * 3] *= damp; dVel[i * 3 + 1] *= damp; dVel[i * 3 + 2] *= damp;
+    dPos[i * 3] += dVel[i * 3] * dt; dPos[i * 3 + 1] += dVel[i * 3 + 1] * dt; dPos[i * 3 + 2] += dVel[i * 3 + 2] * dt;
+    dLife[i] = Math.min(dAge[i] / dMax[i], 1);
+  }
+  dustGeo.attributes.position.needsUpdate = true;
+  dustGeo.attributes.aLife.needsUpdate = true;
+  dustGeo.attributes.aSize.needsUpdate = true;
+}
+
+/* =====================================================================
+   HUD helpers
+   ===================================================================== */
+const msgEl = $('msg');
+function showMsg(text, sub, red) {
+  msgEl.innerHTML = text + (sub ? '<span id="sub">' + sub + '</span>' : '');
+  msgEl.className = 'show' + (red ? ' red' : '');
+}
+const hideMsg = () => { msgEl.className = ''; };
+
+/* =====================================================================
+   FAST-DRAW DUEL: intro zoom -> first-person wait -> draw -> result -> outro
+   ===================================================================== */
+function startDuel(b) {
+  mode = 'intro';
+  duel.bandit = b; duel.t = 0; duel.win = false; duel.shake = 0;
+  b.armT = 0; b.fall = 0; b.flash = 0;
+  b.facing = Math.atan2(player.x - b.x, player.z - b.z);
+  padReset();
+  player.moving = false;
+  document.body.classList.add('duel');
+  showMsg('Outlaw!', '', true);
+}
+
+function enterFirstPerson() {
+  const b = duel.bandit;
+  activeCam = fpCam;
+  dust.visible = false;
+  playerRig.g.visible = false;
+  duel.fov = duel.fovTarget = 42;
+  mode = 'wait'; duel.t = 0;
+  duel.waitFor = 1.3 + rand() * 1.9;
+  duel.windowMs = lerp(900, 450, b.difficulty);
+  duel.flashAmt = 0.9; U.uFlash.value.setRGB(1, 1, 1);
+  vignetteTarget = 0.6; focusBandTarget = 0.18; blurTarget = CFG.tiltBlurPx * 1.4;
+  showMsg('STEADY...', '', false);
+}
+
+function fire() {
+  if (mode === 'wait') {
+    if (duel.t < 0.3) return;                                   // ignore the tap that was still travelling in
+    endDuel(false, 'TOO EARLY!', 'You jumped the gun');
+  } else if (mode === 'draw') {
+    const ms = Math.round(performance.now() - duel.drawAt);
+    endDuel(true, 'GOT HIM!', ms + ' ms');
+  }
+}
+
+function endDuel(win, title, sub) {
+  mode = 'result'; duel.t = 0; duel.win = win;
+  duel.shake = 1;
+  duel.flashAmt = 0.75;
+  Assets.play('shot', 1, win ? 1 : 0.85);
+  U.uFlash.value.setRGB(win ? 1 : 0.85, win ? 0.95 : 0.15, win ? 0.8 : 0.1);
+  duel.fovTarget = 30;
+  if (!win) duel.bandit.flash = 1;
+  showMsg(title, sub, !win);
+}
+
+function leaveDuel() {
+  const b = duel.bandit;
+  mode = 'outro'; duel.t = 0;
+  activeCam = ortho;
+  dust.visible = true;
+  playerRig.g.visible = true;
+  document.body.classList.remove('duel');
+  hideMsg();
+  vignetteTarget = CFG.vignette; focusBandTarget = CFG.tiltFocus; blurTarget = CFG.tiltBlurPx;
+  if (!duel.win) {                                              // defeated: back to the edge of town
+    player.x = START.x; player.z = START.z;
+    playerRig.g.position.set(player.x, 0, player.z);
+    b.armT = 0; b.fall = 0;
+  }
+  duel.outroFrom = { x: focus.x, z: focus.z, zoom };   // ease out from wherever the zoom-in ended
+}
+
+function updateDuel(dt) {
+  const b = duel.bandit;
+  duel.t += dt;
+  if (mode === 'intro') {
+    const k = ease(clamp(duel.t / 1.15, 0, 1));
+    focus.x = lerp(player.x, b.x, k * 0.55);
+    focus.z = lerp(player.z, b.z, k * 0.55);
+    zoom = lerp(1, 3.0, k);
+    blurTarget = CFG.tiltBlurPx * (1 + k * 0.6);
+    vignetteTarget = lerp(CFG.vignette, 0.5, k);
+    if (duel.t >= 1.15) enterFirstPerson();
+  } else if (mode === 'wait') {
+    duel.fovTarget = lerp(42, 34, clamp(duel.t / duel.waitFor, 0, 1));    // slow dramatic push-in
+    if (duel.t >= duel.waitFor) {
+      mode = 'draw';
+      duel.drawAt = performance.now();
+      duel.fov = 24; duel.fovTarget = 32; duel.shake = 0.35;
+      showMsg('DRAW!', '', true);
+      Assets.play('draw', 0.8);
+    }
+  } else if (mode === 'draw') {
+    if (performance.now() - duel.drawAt > duel.windowMs) endDuel(false, 'TOO SLOW!', 'He shot first');
+  } else if (mode === 'result') {
+    if (duel.t > 1.8) leaveDuel();
+  } else if (mode === 'outro') {
+    const k = ease(clamp(duel.t / 0.9, 0, 1));
+    focus.x = lerp(duel.outroFrom.x, player.x, k);
+    focus.z = lerp(duel.outroFrom.z, player.z, k);
+    zoom = lerp(duel.outroFrom.zoom, 1, k);
+    if (duel.t >= 0.9) {
+      mode = 'explore'; zoom = 1;
+      if (duel.win) { b.alive = false; b.rig.g.visible = false; updateLeft(); }
+      duel.bandit = null;
+      if (!bandits.some(x => x.alive)) { showMsg('TOWN CLEARED', 'Nice shootin\'', false); setTimeout(hideMsg, 3200); }
+    }
+  }
+  // first-person camera
+  if (b && activeCam === fpCam) {
+    duel.fov += (duel.fovTarget - duel.fov) * Math.min(1, dt * (mode === 'draw' ? 9 : 3));
+    fpCam.fov = duel.fov; fpCam.updateProjectionMatrix();
+    duel.shake = Math.max(0, duel.shake - dt * 2.2);
+    const dx = b.x - player.x, dz = b.z - player.z, len = Math.hypot(dx, dz) || 1;
+    const sh = duel.shake * 0.07;
+    fpCam.position.set(player.x - dx / len * 0.8 + (rand() - 0.5) * sh, 1.55 + (rand() - 0.5) * sh, player.z - dz / len * 0.8 + (rand() - 0.5) * sh);
+    fpCam.lookAt(b.x, lerp(1.1, 0.35, ease(b.fall)), b.z);
+  }
+}
+
+/* =====================================================================
+   FRAME LOOP
+   ===================================================================== */
+let last = 0, tAcc = 0, frames = 0, fpsAcc = 0, lastAdjust = 0;
+function updateCameras(dt) {
+  if (mode === 'explore') {
+    const f = Math.min(1, dt * 6);
+    focus.x += (player.x - focus.x) * f; focus.z += (player.z - focus.z) * f;
+  }
+  const fy = 0.9;
+  ortho.position.set(focus.x + CAM_D, CAM_D + fy, focus.z + CAM_D);
+  ortho.lookAt(focus.x, fy, focus.z);
+  ortho.zoom = zoom;
+  ortho.updateProjectionMatrix();
+}
+
+function frame(now) {
+  requestAnimationFrame(frame);
+  const raw = Math.min((now - last) / 1000, 1);
+  last = now;
+  const dt = Math.min(raw, 0.05);
+  tAcc += dt;
+
+  if (mode === 'explore') {
+    updatePlayer(dt);
+    for (const b of bandits) {
+      if (b.alive && Math.hypot(player.x - b.x, player.z - b.z) < CFG.triggerRadius) { startDuel(b); break; }
+    }
+  } else {
+    player.moving = false; player.dx = player.dy = 0;
+    updateDuel(dt);
+  }
+  animatePlayer(tAcc);
+  bandits.forEach(b => animateBandit(b, tAcc, dt));
+  updateCameras(dt);
+  updateDust(Math.max(dt, 1e-3));
+
+  // smooth post uniforms
+  const s = Math.min(1, dt * 4);
+  U.uVignette.value += (vignetteTarget - U.uVignette.value) * s;
+  U.uFocus.value += (focusBandTarget - U.uFocus.value) * s;
+  const blurPx = blurTarget * pixelRatio;
+  U.uBlur.value += (blurPx - U.uBlur.value) * s;
+  duel.flashAmt = Math.max(0, duel.flashAmt - dt * 2.4);
+  U.uFlashAmt.value = duel.flashAmt;
+
+  // dust point size = pixels per world unit
+  dustU.uScale.value = (rt.height || 1) / (viewH / ortho.zoom);
+
+  renderer.setRenderTarget(rt);
+  renderer.render(scene, activeCam);
+  renderer.setRenderTarget(null);
+  renderer.render(postScene, postCam);
+
+  // adaptive resolution: drop pixel ratio if the device struggles
+  fpsAcc += raw; frames++;
+  if (frames >= 90) {
+    const fps = frames / fpsAcc; frames = 0; fpsAcc = 0;
+    if (fps < 42 && pixelRatio > 1 && now - lastAdjust > 2500) {
+      pixelRatio = Math.max(1, pixelRatio - 0.25); lastAdjust = now; resize();
+    }
+  }
+}
+
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', () => setTimeout(resize, 150));
+resize();
+requestAnimationFrame(t => { last = t; frame(t); });
+
+// handy for poking around in the console
+window.GF = { player, bandits, startDuel, fire, CFG, get mode() { return mode; } };
+})();
+</script>
+</body>
+</html>
