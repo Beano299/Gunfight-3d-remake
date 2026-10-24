@@ -1,0 +1,14 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "beano299.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "beano299.github",
+  "start_url": "/https://beano299.github.io/Gunfight-3d-remake/",
+  "theme_color": "#ffffff",
+  "id": "beano299.github",
+  "description": "Gunfight remake",
+  "lang": "en"
+}
